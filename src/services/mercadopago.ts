@@ -42,7 +42,7 @@ export async function createPaymentPreference(email: string): Promise<string> {
       {
         items: [{
           id: "subscription-monthly",
-          title: "Google Dorks Pro - Assinatura Mensal",
+          title: "MolinaGo Vehicle Rental App - Assinatura Mensal",
           description: "Acesso premium por 30 dias",
           quantity: 1,
           currency_id: "BRL",
