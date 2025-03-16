@@ -1,59 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { checkSubscription } from './services/mercadopago';
+import { UserRegistration } from './components/UserRegistration';
 
-function Login({ onLogin }) {
-  const [email, setEmail] = useState('');
+function App() {
+  const [userData, setUserData] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [checkingSubscription, setCheckingSubscription] = useState(true);
 
   useEffect(() => {
-    const verifySubscription = async () => {
-      if (email) {
-        const subscribed = await checkSubscription(email);
+    const checkUserSubscription = async () => {
+      if (userData?.email) {
+        const subscribed = await checkSubscription(userData.email);
         setIsSubscribed(subscribed);
       }
       setCheckingSubscription(false);
     };
-    verifySubscription();
-  }, [email]);
+    checkUserSubscription();
+  }, [userData]);
 
-  const handleLogin = () => {
-    if (isSubscribed) {
-      onLogin(email);
-    } else {
-      alert('Assinatura necessária para continuar.');
-    }
+  const handleUserRegistration = async (data) => {
+    setUserData(data);
+    const subscribed = await checkSubscription(data.email);
+    setIsSubscribed(subscribed);
   };
+
+  if (checkingSubscription) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-gray-700">Verificando assinatura...</p>
+      </div>
+    );
+  }
+
+  if (!userData || !isSubscribed) {
+    return <UserRegistration onComplete={handleUserRegistration} />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-        <input
-          type="email"
-          placeholder="Digite seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded mb-4"
-        />
-        <button
-          onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Entrar
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <Login onLogin={() => window.location.href = "https://www.radiotatuapefm.com.br"} />
       <a
         href="https://www.radiotatuapefm.com.br"
-        className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
       >
         Fazer Locação
       </a>
