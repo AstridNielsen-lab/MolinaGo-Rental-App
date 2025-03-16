@@ -46,7 +46,7 @@ export async function createPaymentPreference(email: string): Promise<string> {
           description: "Acesso premium por 30 dias",
           quantity: 1,
           currency_id: "BRL",
-          unit_price: 2.99
+          unit_price: 1.99
         }],
         payer: {
           email: email
