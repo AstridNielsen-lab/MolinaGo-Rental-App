@@ -31,7 +31,7 @@ export function SplashScreen({ onFinish }: SplashScreenProps) {
       
       <div className="mt-8 text-center">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
-          Google Dorks Pro Leads
+          MolinaGo Vehicle Rental App
         </h1>
         <p className="text-gray-600 text-lg">
           Like Look Solutions
